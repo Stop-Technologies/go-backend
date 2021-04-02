@@ -1,5 +1,5 @@
 # Config files
-config/config.js
+config/*
 
 # Dependency directories
 node_modules/
