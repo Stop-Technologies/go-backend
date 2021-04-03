@@ -2,7 +2,7 @@
 
 ### Install Docker Engine
 
-[User the official docker website](https://docs.docker.com/engine/install/)
+[Use the official docker website](https://docs.docker.com/engine/install/)
 
 ### User Docker Compose to run the multicontainer app
 
@@ -24,4 +24,4 @@ docker-compose run app bash
 npm run migrate up
 ```
 
-## Now the app is running on [localhost:3000](https://localhost:3000)
+## Now the app is running on [localhost:3000](http://localhost:3000)
