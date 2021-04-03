@@ -1,13 +1,27 @@
 # Go Backend
 
-### Installing dependencies
+### Install Docker Engine
 
-```
-npm install
+[User the official docker website](https://docs.docker.com/engine/install/)
+
+### User Docker Compose to run the multicontainer app
+
+```bash
+# On the root dir of the project:
+docker-compose up
 ```
 
-### Executing program
+### Connect to a terminal on the app container to run the migrations
 
+```bash
+# On the root dir of the project:
+docker-compose run app bash
 ```
-npm start
+
+### Run the migrations
+
+```bash
+npm run migrate up
 ```
+
+## Now the app is running on [localhost:3000](https://localhost:3000)
