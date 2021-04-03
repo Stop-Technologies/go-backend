@@ -24,4 +24,4 @@ docker-compose run app bash
 npm run migrate up
 ```
 
-## Now the app is running on [localhost:3000](http://localhost:3000)
+## Now the Go backend app is running on [localhost:3000](http://localhost:3000)
