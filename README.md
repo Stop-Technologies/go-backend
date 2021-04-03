@@ -4,7 +4,7 @@
 
 [Use the official docker website](https://docs.docker.com/engine/install/)
 
-### User Docker Compose to run the multicontainer app
+### Use Docker Compose to run the multicontainer app
 
 ```bash
 # On the root dir of the project:
