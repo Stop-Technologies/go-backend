@@ -1,20 +1,19 @@
 const sql = require('sql-template-strings');
 const db = require('../data-access/db');
-// This is only an example model
 
 module.exports = {
-  async create(id, name, role , password) {
+  async create(id_place, id_user) {
     try {
       const {rows} = await db.query(sql`
-      INSERT INTO users (id, name, role, password)
-        VALUES (${id}, ${name}, ${role}, ${password})
+      INSERT INTO access (id_place, id_user)
+        VALUES (${id_place}, ${id_user})
         RETURNING id;
       `);
 
-      const [user] = rows;
-      return user;
+      const [access] = rows;
+      return access;
     } catch (error) {
-      if (error.constraint === 'users_id_key') {
+      if (error.constraint === 'access_id_key') {
         return null;
       }
 
@@ -24,14 +23,14 @@ module.exports = {
 
   async findAll() {
     const {rows} = await db.query(sql`
-    SELECT * FROM users;
+    SELECT * FROM access;
     `);
     return rows;
   },
 
   async delete(id){
     const {rows} = await db.query(sql`
-    DELETE FROM users WHERE id = ${id};
+    DELETE FROM access WHERE id = ${id};
     `);
   }
 };

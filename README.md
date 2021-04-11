@@ -16,6 +16,9 @@ docker-compose up
 ```bash
 # On the root dir of the project:
 docker-compose run app bash
+
+# Run as superuser on linux
+sudo docker exec -u 0 -it go-backend_app_1  bash
 ```
 
 ### Run the migrations
