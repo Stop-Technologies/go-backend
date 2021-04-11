@@ -29,6 +29,13 @@ module.exports = {
     return rows;
   },
 
+  async find(id) {
+    const {rows} = await db.query(sql`
+    SELECT FROM users WHERE id = ${id};
+    `);
+    return rows;
+  },
+
   async delete(id){
     const {rows} = await db.query(sql`
     DELETE FROM users WHERE id = ${id};

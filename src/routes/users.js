@@ -3,7 +3,7 @@ var router = express.Router();
 var users = require('../models/user.js');
 // This is only an example controller
 
-/* GET users route. */
+/* GET users routes. */
 router.get('/users', function(req, res, next) {
   users.findAll()
     .then((users) => {
@@ -13,6 +13,8 @@ router.get('/users', function(req, res, next) {
       res.status(500).send({error: error, sucess: false});
     }))
 });
+
+
 
 /* POST users route. */
 router.post('/users', function(req, res, next) {
@@ -25,6 +27,7 @@ router.post('/users', function(req, res, next) {
       res.status(500).send({error: error, sucess: false});
     }))
 });
+
 
 router.delete('/users', function(req, res, next){
   console.log(req.body)
