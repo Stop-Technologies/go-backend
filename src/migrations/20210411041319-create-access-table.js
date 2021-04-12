@@ -8,8 +8,16 @@ module.exports.up = async function (next) {
   await client.query(`
   CREATE TABLE IF NOT EXISTS access (
     id serial PRIMARY KEY,
-    id_place integer REFERENCES places (id),
-    id_user bigint REFERENCES users (id)
+    id_place integer,
+    id_user bigint,
+    CONSTRAINT fk_place
+      FOREIGN KEY(id_place)
+        REFERENCES places(id)
+          ON DELETE CASCADE,
+    CONSTRAINT fk_user
+      FOREIGN KEY(id_user)
+        REFERENCES users(id)
+          ON DELETE CASCADE
   );
   `);
 

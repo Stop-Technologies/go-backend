@@ -19,7 +19,7 @@ router.post('/places', function(req, res, next) {
   console.log(req.body)
   places.create(req.body.access_capacity)
     .then((place) => {
-      place.send({place: place, sucess: true});
+      res.send({place: place, sucess: true});
     })
     .catch(((error) => {
       res.status(500).send({error: error, sucess: false});

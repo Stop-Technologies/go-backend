@@ -7,7 +7,7 @@ module.exports = {
       const {rows} = await db.query(sql`
       INSERT INTO places (access_capacity)
         VALUES (${access_capacity})
-        RETURNING id;
+        RETURNING id, access_capacity;
       `);
 
       const [place] = rows;
@@ -29,9 +29,16 @@ module.exports = {
   },
 
   async delete(id){
-    const {rows} = await db.query(sql`
-    DELETE FROM places WHERE id = ${id}
-    RETURNING id;
-    `);
+    try{
+      const {rows} = await db.query(sql`
+      DELETE FROM places WHERE id = ${id}
+      RETURNING id;
+      `);
+     const [place] = rows;
+     return place;
+    }catch(error){
+      throw error;
+    }
+    
   }
 };

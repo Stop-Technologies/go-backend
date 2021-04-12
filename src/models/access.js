@@ -7,7 +7,7 @@ module.exports = {
       const {rows} = await db.query(sql`
       INSERT INTO access (id_place, id_user)
         VALUES (${id_place}, ${id_user})
-        RETURNING id;
+        RETURNING id, id_place, id_user;
       `);
 
       const [access] = rows;
@@ -29,9 +29,15 @@ module.exports = {
   },
 
   async delete(id){
-    const {rows} = await db.query(sql`
-    DELETE FROM access WHERE id = ${id}
-    RETURNING id;
-    `);
+    try{
+      const {rows} = await db.query(sql`
+      DELETE FROM access WHERE id = ${id}
+      RETURNING id;
+      `);
+      const[access] = row;
+      return access;
+    }catch(error){
+      throw error;
+    }
   }
 };

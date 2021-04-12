@@ -30,9 +30,15 @@ module.exports = {
   },
 
   async delete(id){
-    const {rows} = await db.query(sql`
-    DELETE FROM users WHERE id = ${id}
-    RETURNING id;
-    `);
+    try{
+      const {rows} = await db.query(sql`
+      DELETE FROM users WHERE id = ${id}
+      RETURNING id;
+      `);
+      const[user] = rows;
+      return user;
+    }catch(error){
+      throw error;
+    }
   }
 };
