@@ -7,13 +7,15 @@ module.exports.up = async function (next) {
 
   await client.query(`
   CREATE TABLE IF NOT EXISTS users (
-    email text UNIQUE,
-    password text
+    id bigint PRIMARY KEY,
+    name char(45) NOT NULL,
+    role char(45) NOT NULL,
+    password char(45) NOT NULL
   );
   `);
 
   await client.query(`
-  CREATE INDEX users_email on users (email);
+  CREATE INDEX users_id_index on users (id);
   `);
 
   await client.release(true);
