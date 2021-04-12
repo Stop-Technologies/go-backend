@@ -31,7 +31,7 @@ router.post('/users', function(req, res, next) {
 
 router.delete('/users', function(req, res, next){
   console.log(req.body)
-  users.delete(req.id)
+  users.delete(req.body.id)
   .then((user) => {
     res.send({user: user, sucess: true});
   })

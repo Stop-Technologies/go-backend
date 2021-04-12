@@ -30,7 +30,8 @@ module.exports = {
 
   async delete(id){
     const {rows} = await db.query(sql`
-    DELETE FROM access WHERE id = ${id};
+    DELETE FROM access WHERE id = ${id}
+    RETURNING id;
     `);
   }
 };

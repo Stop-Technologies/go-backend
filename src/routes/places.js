@@ -28,7 +28,7 @@ router.post('/places', function(req, res, next) {
 
 router.delete('/places', function(req, res, next){
   console.log(req.body)
-  places.delete(req.id)
+  places.delete(req.body.id)
   .then((place) => {
     res.send({place: place, sucess: true});
   })

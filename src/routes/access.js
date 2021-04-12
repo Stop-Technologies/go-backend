@@ -27,7 +27,7 @@ router.post('/access', function(req, res, next) {
 });
 
 router.delete('/access', function(req, res, next){
-  console.log(req.body)
+  console.log(req.body.id)
   access.delete(req.id)
   .then((access) => {
     res.send({access: access, sucess: true});
