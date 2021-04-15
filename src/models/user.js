@@ -40,5 +40,18 @@ module.exports = {
     }catch(error){
       throw error;
     }
+  },
+
+  async find(id) {
+    // This try code is doing nothing.
+    try {
+      const {rows} = await db.query(sql`
+      SELECT * FROM users WHERE id = ${id} LIMIT 1;
+      `);
+      const [user] = rows;
+      return user;
+    }catch(error){
+      throw error;
+    }
   }
 };
