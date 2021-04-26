@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var access = require('../models/access.js');
-// This is only an example controller
+const express = require('express');
+const router = express.Router();
+const access = require('../models/access.js');
 
 /* GET access route. */
 router.get('/access', function(req, res, next) {

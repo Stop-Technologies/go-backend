@@ -1,57 +1,45 @@
 const sql = require('sql-template-strings');
 const db = require('../data-access/db');
-// This is only an example model
+const guard = require('../util/security-helper');
 
 module.exports = {
-  async create(id, name, role , password) {
-    try {
-      const {rows} = await db.query(sql`
-      INSERT INTO users (id, name, role, password)
-        VALUES (${id}, ${name}, ${role}, ${password})
-        RETURNING id;
-      `);
+  async create(id, name, role, password) {
+    console.log("in");
+    const {hash, salt} = guard.generateSecurityCredentials(password, 100);
+    console.log("out");
+    console.log(hash);
+    console.log(salt);
+    const {rows} = await db.query(sql`
+    INSERT INTO users (id, name, role, hash, salt)
+      VALUES (${id}, ${name}, ${role}, ${hash}, ${salt})
+      RETURNING id;
+    `);
 
-      const [user] = rows;
-      return user;
-    } catch (error) {
-      if (error.constraint === 'users_id_key') {
-        return null;
-      }
-
-      throw error;
-    }
+    const [user] = rows;
+    return user;
   },
 
   async findAll() {
     const {rows} = await db.query(sql`
-    SELECT * FROM users;
+    SELECT id, name, role FROM users;
     `);
     return rows;
   },
 
   async delete(id){
-    try{
-      const {rows} = await db.query(sql`
-      DELETE FROM users WHERE id = ${id}
-      RETURNING id;
-      `);
-      const[user] = rows;
-      return user;
-    }catch(error){
-      throw error;
-    }
+    const {rows} = await db.query(sql`
+    DELETE FROM users WHERE id = ${id}
+    RETURNING id;
+    `);
+    const[user] = rows;
+    return user;
   },
 
   async find(id) {
-    // This try code is doing nothing.
-    try {
-      const {rows} = await db.query(sql`
-      SELECT * FROM users WHERE id = ${id} LIMIT 1;
-      `);
-      const [user] = rows;
-      return user;
-    }catch(error){
-      throw error;
-    }
+    const {rows} = await db.query(sql`
+    SELECT * FROM users WHERE id = ${id} LIMIT 1;
+    `);
+    const [user] = rows;
+    return user;
   }
 };
