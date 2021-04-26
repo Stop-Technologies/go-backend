@@ -6,7 +6,7 @@ module.exports.up = async function (next) {
   await client.query(`
   CREATE TABLE IF NOT EXISTS places (
     id serial PRIMARY KEY,
-    access_capacity integer NOT NULL
+    capacity integer NOT NULL
   );
   `);
 

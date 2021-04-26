@@ -1,6 +1,5 @@
 'use strict'
 const db = require('../data-access/db');
-// This is only an example transaction
 
 module.exports.up = async function (next) {
   const client = await db.connect();
@@ -8,9 +7,10 @@ module.exports.up = async function (next) {
   await client.query(`
   CREATE TABLE IF NOT EXISTS users (
     id bigint PRIMARY KEY,
-    name char(45) NOT NULL,
-    role char(45) NOT NULL,
-    password char(45) NOT NULL
+    name text NOT NULL,
+    role text NOT NULL,
+    hash text NOT NULL,
+    salt text NOT NULL
   );
   `);
 

@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var places = require('../models/place.js');
-// This is only an example controller
+const express = require('express');
+const router = express.Router();
+const places = require('../models/place.js');
 
 /* GET places route. */
 router.get('/places', function(req, res, next) {
@@ -16,7 +15,7 @@ router.get('/places', function(req, res, next) {
 
 /* POST places route. */
 router.post('/places', function(req, res, next) {
-  places.create(req.body.access_capacity)
+  places.create(req.body.capacity)
     .then((place) => {
       res.send({place: place, success: true});
     })
