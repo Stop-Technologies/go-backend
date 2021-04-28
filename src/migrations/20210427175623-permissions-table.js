@@ -7,8 +7,7 @@ module.exports.up = async function (next) {
   CREATE TABLE IF NOT EXISTS permissions (
     id serial PRIMARY KEY,
     user_id bigint NOT NULL,
-    time_start timestamp NOT NULL,
-    time_end timestamp NOT NULL,
+    period tsrange NOT NULL,
     CONSTRAINT fk_user_id
       FOREIGN KEY(user_id)
         REFERENCES users(id)

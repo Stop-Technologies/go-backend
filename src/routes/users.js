@@ -1,11 +1,12 @@
 const express = require('express');
+const permission = require('../models/permission.js');
 const router = express.Router();
 const users = require('../models/user.js');
 const user_verification = require('../util/user_verification.js');
 
-const users_path = 'users/'
+
 /* GET users routes. */
-router.get(users_path, function (req, res, next) {
+router.get('/users', function (req, res, next) {
   users.findAll()
     .then((users) => {
       res.send({ users: users, success: true });
@@ -17,7 +18,7 @@ router.get(users_path, function (req, res, next) {
 
 
 /* POST users route. */
-router.post(users_path, function (req, res, next) {
+router.post('/users', function (req, res, next) {
   users.create(req.body.id, req.body.name, req.body.role, req.body.password)
     .then((user) => {
       res.send({ user: user, success: true });
@@ -28,7 +29,7 @@ router.post(users_path, function (req, res, next) {
 });
 
 
-router.delete(users_path, function (req, res, next) {
+router.delete('/users', function (req, res, next) {
   users.delete(req.body.id)
     .then((user) => {
       res.send({ user: user, success: true });
@@ -38,18 +39,13 @@ router.delete(users_path, function (req, res, next) {
     }))
 });
 
-router.get(users_path + '/verify/:id', (req, res, next) => {
-  /*users.find(req.body.id)
-    .then((user) => {
-      user_verification(user, (err, success)) => {
-        if (err) {
+router.get('/users/verify/:id', (req, res, next) => {
+  user_verification(req.params.id, res, (result, error) => {
+    if (error == null) {
+      res.send({ access_user: result, error: null });
+    }
+  })
+});
 
-        } else {
-
-        }
-      }
-    })*/
-}
-)
 
 module.exports = router;

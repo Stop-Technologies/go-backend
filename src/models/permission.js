@@ -2,11 +2,11 @@ const sql = require('sql-template-strings');
 const db = require('../data-access/db');
 
 module.exports = {
-  async create(user_id, time_start, time_end) {
+  async create(user_id, period) {
     const {rows} = await db.query(sql`
-    INSERT INTO permissions (user_id, time_start, time_end)
-      VALUES (${user_id}, ${time_start}, ${time_end})
-      RETURNING id, user_id, time_start, time_end;
+    INSERT INTO permissions (user_id, period)
+      VALUES (${user_id}, ${period})
+      RETURNING id, user_id, period;
     `);
 
     const [access] = rows;
@@ -22,9 +22,19 @@ module.exports = {
 
   async find(id){
     const {rows} = await db.query(sql`
-    SELECT FROM permissions where id = ${id};
+    SELECT * FROM permissions where user_id = ${id};
     `);
+    return rows;
   },
+
+  async findPeriod(id, next){
+    const {rows} = await db.query(sql`
+    SELECT period FROM permissions where user_id = ${id};
+    `);
+    console.log(rows);
+    return rows;
+  },
+
 
   async delete(id){
     const {rows} = await db.query(sql`
