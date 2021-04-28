@@ -1,5 +1,6 @@
 const express = require('express');
 const permission = require('../models/permission.js');
+const user = require('../models/user.js');
 const router = express.Router();
 const users = require('../models/user.js');
 const user_verification = require('../util/user_verification.js');
@@ -8,6 +9,16 @@ const user_verification = require('../util/user_verification.js');
 /* GET users routes. */
 router.get('/users', function (req, res, next) {
   users.findAll()
+    .then((users) => {
+      res.send({ users: users, success: true });
+    })
+    .catch(((error) => {
+      res.status(500).send({ error: error, success: false });
+    }))
+});
+
+router.get('/users/:id', function (req, res, next) {
+  users.find(req.params.id)
     .then((users) => {
       res.send({ users: users, success: true });
     })
@@ -42,7 +53,18 @@ router.delete('/users', function (req, res, next) {
 router.get('/users/verify/:id', (req, res, next) => {
   user_verification(req.params.id, res, (result, error) => {
     if (error == null) {
-      res.send({ access_user: result, error: null });
+      if(result == true){
+        user.find(req.params.id)
+        .then(user => {
+          let userInformation = { id: user.id, name: user.name, role: user.role};
+          res.send({ access_user: result, user: userInformation, success:true })
+        })
+        .catch(error => {
+          res.status(500).send({error:error, success:false})
+        });
+      }else{
+        res.send({access_user: result, error: null});
+      }
     }
   })
 });
