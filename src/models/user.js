@@ -4,11 +4,7 @@ const guard = require('../util/security-helper');
 
 module.exports = {
   async create(id, name, role, password) {
-    console.log("in");
     const {hash, salt} = guard.generateSecurityCredentials(password, 100);
-    console.log("out");
-    console.log(hash);
-    console.log(salt);
     const {rows} = await db.query(sql`
     INSERT INTO users (id, name, role, hash, salt)
       VALUES (${id}, ${name}, ${role}, ${hash}, ${salt})

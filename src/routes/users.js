@@ -51,22 +51,24 @@ router.delete('/users', function (req, res, next) {
 });
 
 router.get('/users/verify/:id', (req, res, next) => {
-  user_verification(req.params.id, res, (result, error) => {
-    if (error == null) {
-      if(result == true){
-        user.find(req.params.id)
-        .then(user => {
-          let userInformation = { id: user.id, name: user.name, role: user.role};
-          res.send({ access_user: result, user: userInformation, success:true })
-        })
-        .catch(error => {
-          res.status(500).send({error:error, success:false})
-        });
-      }else{
-        res.send({access_user: result, error: null});
-      }
+  user_verification(req.params.id)
+  .then(permission => {
+    if (permission) {
+      user.find(req.params.id)
+      .then(user => {
+        let userInformation = { id: user.id, name: user.name, role: user.role};
+        res.send({ access_user: permission, user: userInformation, success:true })
+      })
+      .catch(error => {
+        res.status(500).send({error:error, success:false})
+      });
+    } else {
+      res.send({success: false});
     }
   })
+  .catch(error => {
+    res.status(500).send({ error: error, success: false })
+  });
 });
 
 
