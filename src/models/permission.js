@@ -31,7 +31,6 @@ module.exports = {
     const {rows} = await db.query(sql`
     SELECT period FROM permissions where user_id = ${id};
     `);
-    console.log(rows);
     return rows;
   },
 
