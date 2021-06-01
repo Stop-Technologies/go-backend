@@ -8,7 +8,7 @@ module.exports = {
       INTO places (name)
       VALUES (${name})
       WHERE id = ${id}
-      RETURNING id
+      RETURNING id;
     `)
     const [user] = rows
     return user
@@ -19,7 +19,7 @@ module.exports = {
       INSERT
       INTO places (id, name)
       VALUES (${id}, ${name})
-      RETURNING id
+      RETURNING id;
     `)
     const [user] = rows
     return user
@@ -28,7 +28,7 @@ module.exports = {
   async findAll () {
     const {rows} = await db.query(sql`
       SELECT *
-      FROM places
+      FROM places;
     `)
     return rows
   },
@@ -38,7 +38,7 @@ module.exports = {
       DELETE
       FROM places
       WHERE id = ${id}
-      RETURNING id
+      RETURNING id;
     `)
     const[user] = rows
     return user
@@ -49,7 +49,17 @@ module.exports = {
       SELECT *
       FROM places
       WHERE id = ${id}
-      LIMIT 1
+      LIMIT 1;
+    `)
+    const [person] = rows
+    return person
+  },
+
+  async update (id, newId) {
+    const { rows } = await db.query(sql`
+      UPDATE places
+      SET id = ${newId}
+      WHERE id = ${id};
     `)
     const [person] = rows
     return person

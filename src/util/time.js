@@ -17,4 +17,7 @@ module.exports.inTimeRangesNow = function (ranges) {
 }
 
 module.exports.makeTimeRange = function (startDay, endDay, startTime, endTime) {
+  startDay = pad(startDay,2)
+  endDay = pad(endDay,2)
+  return `[1996-01-${startDay} ${startTime}:00, 1996-01-${endDay} ${endTime}:00]`
 }

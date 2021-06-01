@@ -7,7 +7,7 @@ module.exports = {
       INSERT
       INTO guests (person_id)
       VALUES (${id})
-      RETURNING person_id
+      RETURNING person_id;
     `)
     const [user] = rows
     return user
@@ -16,7 +16,7 @@ module.exports = {
   async findAll () {
     const {rows} = await db.query(sql`
       SELECT *
-      FROM guests
+      FROM guests;
     `)
     return rows
   },
@@ -26,7 +26,17 @@ module.exports = {
       SELECT *
       FROM guests
       WHERE person_id = ${id}
-      LIMIT 1
+      LIMIT 1;
+    `)
+    const [person] = rows
+    return person
+  },
+
+  async update (id, newId) {
+    const { rows } = await db.query(sql`
+      UPDATE guests
+      SET id = ${newId}
+      WHERE person_id = ${id};
     `)
     const [person] = rows
     return person
