@@ -1,39 +1,28 @@
-const express = require('express');
-const router = express.Router();
-const permissions = require('../models/permission.js');
+const Router = require('express')
+const router = Router()
+const { authorize } = require('../auth/service')
+const { verifyAccess } = require('../controllers/permissions')
+const { find: findGuest } = require('../repositories/guests')
 
-/* GET permissions route. */
-router.get('/permissions', function(req, res, next) {
-  permissions.findAll()
-    .then((permissions) => {
-      res.send({permissions: permissions, success: true});
+router.use(authorize(['admin', 'moderator']))
+
+router.get('/access/:guest_id', async function (req, res) {
+  verifyAccess(req.params.guest_id, res.locals.user.place_id)
+    .then(async (access) => {
+      let guest = await findGuest(req.params.guest_id)
+      if (guest) {
+        res.send({
+          success: true,
+          access: access,
+          name: guest.name
+        })
+      } else {
+        res.status(500).send({ success: false, error: 'Guest not found' })
+      }
     })
-    .catch(((error) => {
-      res.status(500).send({error: error, success: false});
-    }))
-});
-
-/* POST permissions route. */
-router.post('/permissions', function(req, res, next) {
-  permissions.create(req.body.user_id, req.body.period)
-    .then((place) => {
-      res.send({place: place, success: true});
+    .catch((error) => {
+      res.status(500).send({ success: false, error: error.message })
     })
-    .catch(((error) => {
-      res.status(500).send({error: error, success: false});
-    }))
-});
+})
 
-router.delete('/permissions', function(req, res, next){
-  permissions.delete(req.body.id)
-  .then((place) => {
-    res.send({place: place, success: true});
-  })
-  .catch(((error) => {
-    res.status(500).send({error: error, success: false});
-  }))
-});
-
-
-
-module.exports = router;
+module.exports = router
