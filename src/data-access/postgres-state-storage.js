@@ -1,5 +1,5 @@
-const sql = require('sql-template-strings');
-const db = require('./db');
+const sql = require('sql-template-strings')
+const db = require('./db')
 
 const ensureMigrationsTable = (db) =>
   db.query(
@@ -48,5 +48,5 @@ const postgresStateStorage = {
 }
 
 module.exports = Object.assign(() => {
-  return postgresStateStorage;
-}, postgresStateStorage);
+  return postgresStateStorage
+}, postgresStateStorage)

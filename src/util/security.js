@@ -12,7 +12,7 @@ function generateHash (password, salt) {
     .digest('hex')
 }
 
-module.exports.generateSecurityCredentials = function (password, saltLength) {
+function generateSecurityCredentials (password, saltLength) {
   let salt = generateRandomString(saltLength)
   let hash = generateHash(password, salt)
   return {
@@ -21,4 +21,7 @@ module.exports.generateSecurityCredentials = function (password, saltLength) {
   }
 }
 
-module.exports.generateHash = generateHash
+module.exports = {
+  generateHash,
+  generateSecurityCredentials
+}

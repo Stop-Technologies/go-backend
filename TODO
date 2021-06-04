@@ -1,0 +1,12 @@
+Make tests
+
+Make error management helpers
+ -> manage errors when database give no results
+
+Make response helpers
+
+Move responsability to controllers(password hashing)
+
+Make helpers to render resources showing public properties or all properties depending on the use case.
+
+Seed database decoupling from the server code

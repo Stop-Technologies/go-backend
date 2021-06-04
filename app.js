@@ -15,10 +15,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-fs.readdir(routesPath, (err, files) => {
-  files.forEach(file => {
-    app.use('/', require(routesPath + '/' + file));
+
+// Utility function to mount all the files in the routes folder
+function mountRoutes(app, route, prefix) {
+  fs.readdir(route, (err, files) => {
+    files.forEach(file => {
+      if (fs.statSync(route + '/' + file).isFile()) {
+        var path = prefix + file.replace(/\.[^/.]+$/, "") + '/';
+        if (file === 'index.js') {
+          path = prefix;
+        }
+        app.use(path, require(route + '/' + file));
+      } else {
+        mountRoutes(app, route + '/' + file, prefix + file + '/');
+      }
+    });
   });
-});
+}
+
+mountRoutes(app, routesPath, '/');
 
 module.exports = app;

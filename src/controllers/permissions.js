@@ -1,34 +1,39 @@
-const { findAllRanges: findRanges } = require('../repositories/permissions')
-const { inTimeRangesNow } = require('../util/time')
+const { inTimeRangesNow, makeTimeRange } = require('../util/time')
 const permissions = require('../repositories/permissions')
 
-
 module.exports = {
-
-  async function(guestId, placeId) {
-    let ranges = await findRanges(guestId, placeId)
+  async verifyAccess(guestId, placeId) {
+    let ranges = await permissions.findRanges(guestId, placeId)
     return inTimeRangesNow(ranges)
   },
 
-  find(){
-    let permissions = await permissions.findAll();
-    return permissions; 
+  async findAll() {
+    return await permissions.findAll()
   },
 
-  find(id){
-    let permission = await permissions.find(id);
-    return permission; 
+  async find(id) {
+    return await permissions.find(id) 
   },
 
-  create(startDay, endDay, startTime, endTime){
-    let permission = await permissions.create(guestId, placeId,
-      timeRange);
-    return permission;
+  async create(permission){
+    var timeRange = makeTimeRange(permission.start_day,
+                                  permission.end_day,
+                                  permission.start_time,
+                                  permission.end_time)
+    return await permissions.create(permission.guest_id,
+                                    permission.place_id,
+                                    timeRange)
   },
 
-  update(id, startDay, endDay, startTime, endTime){
-    let permission = await permissions.create(id, startDay,
-      endDay, startTime, endTime);
-    return permission;
+  async update(id, permission){
+    var timeRange = makeTimeRange(permission.start_day,
+                                  permission.end_day,
+                                  permission.start_time,
+                                  permission.end_time)
+    return await permissions.update(id, timeRange)
+  },
+
+  async delete(id) {
+    return await permissions.delete(id)
   }
 }
