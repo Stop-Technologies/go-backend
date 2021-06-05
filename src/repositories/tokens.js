@@ -70,7 +70,6 @@ module.exports = {
       SELECT *
       FROM access_tokens
     `)
-    const[token] = rows
-    return token
+    return rows
   }
 }

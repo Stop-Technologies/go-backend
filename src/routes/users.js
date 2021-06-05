@@ -27,7 +27,7 @@ router.put('/password', function (req, res) {
 })
 
 router.put('/', function (req, res) {
-  users.updateName(res.locals.user.id, req.body.user)
+  users.update(res.locals.user.id, req.body.user)
     .then((user) => {
       res.send({ user: user, success: true })
     })
