@@ -28,3 +28,10 @@ npm run migrate up
 ```
 
 ## Now the Go backend app is running on [localhost:3000](http://localhost:3000)
+
+
+### Security anotations
+* The system was provided with oauth2 with password and refresh token schema.
+* The passwords are encrypted on the database.
+* The database queries are parameterized to avoid sqñ injection.
+
