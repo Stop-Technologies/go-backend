@@ -47,6 +47,6 @@ npm run migrate up
 ### Requests description:
 * Admin folder: this set of requests work only with an admin authorization token, and can be used to manage all the entities in the database. 
 * auth folder: this set of requests define the auth endpoints to get a token(login), refresh a token and revoke a token(logout).
-* util: the seed route can be used for testing adding fake entities to the database. This endpoint resides in the index router.
+* util: the seed route can be used for testing adding fake entities to the database. This endpoint resides in the index router, yo can go to this route and see the data injected on the database.
 * Other requests: permissions/access/:id is used to verify if a given user has access to a specific place in a especific time.
 
