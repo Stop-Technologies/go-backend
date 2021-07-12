@@ -1,4 +1,4 @@
-const { countInTimeRanges } = require('../util/time')
+const { countInTimeRanges, inTimeRanges } = require('../util/time')
 const entries = require('../repositories/entries')
 const permissions = require('../repositories/permissions')
 const { findRangesByPlace } = require('../repositories/permissions')
