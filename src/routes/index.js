@@ -56,6 +56,14 @@ router.get('/seed', async function(req, res) {
     VALUES (${3})
   `)
   await db.query(sql`
+    INSERT INTO people (id, name)
+    VALUES (${4}, ${'guest2'})
+  `)
+  await db.query(sql`
+    INSERT INTO guests (person_id)
+    VALUES (${4})
+  `)
+  await db.query(sql`
     INSERT INTO permissions (guest_id, place_id, time_range)
     VALUES (${3}, ${1}, ${'[1996-01-01 00:00:00, 1996-01-01 23:59:59)'})
   `)
@@ -74,6 +82,26 @@ router.get('/seed', async function(req, res) {
   await db.query(sql`
     INSERT INTO permissions (guest_id, place_id, time_range)
     VALUES (${3}, ${1}, ${'[1996-01-05 00:00:00, 1996-01-05 23:59:59)'})
+  `)
+  await db.query(sql`
+    INSERT INTO permissions (guest_id, place_id, time_range)
+    VALUES (${4}, ${1}, ${'[1996-01-01 00:00:00, 1996-01-01 23:59:59)'})
+  `)
+  await db.query(sql`
+    INSERT INTO permissions (guest_id, place_id, time_range)
+    VALUES (${4}, ${1}, ${'[1996-01-02 00:00:00, 1996-01-02 23:59:59)'})
+  `)
+  await db.query(sql`
+    INSERT INTO permissions (guest_id, place_id, time_range)
+    VALUES (${4}, ${1}, ${'[1996-01-03 00:00:00, 1996-01-03 23:59:59)'})
+  `)
+  await db.query(sql`
+    INSERT INTO permissions (guest_id, place_id, time_range)
+    VALUES (${4}, ${1}, ${'[1996-01-04 00:00:00, 1996-01-04 23:59:59)'})
+  `)
+  await db.query(sql`
+    INSERT INTO permissions (guest_id, place_id, time_range)
+    VALUES (${4}, ${1}, ${'[1996-01-05 00:00:00, 1996-01-05 23:59:59)'})
   `)
   res.send('Seed completed')
 })

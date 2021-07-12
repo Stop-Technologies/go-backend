@@ -3,13 +3,16 @@ const router = Router()
 const { authorize } = require('../auth/service')
 const { verifyAccess } = require('../controllers/permissions')
 const { find: findGuest } = require('../repositories/guests')
-
+const { create: createEntry, isGuestAlready } = require('../controllers/entries')
 router.use(authorize(['admin', 'moderator']))
-
 router.get('/access/:guest_id', async function (req, res) {
-  verifyAccess(req.params.guest_id, res.locals.user.place_id)
+  place_id = res.locals.user.place_id
+  guest_id = req.params.guest_id
+  verifyAccess(guest_id, place_id)
     .then(async (access) => {
-      let guest = await findGuest(req.params.guest_id)
+      isGuestInside = await isGuestAlready(place_id, guest_id);
+      if (access && !isGuestInside) createEntry(guest_id, place_id);
+      let guest = await findGuest(guest_id)
       if (guest) {
         res.send({
           success: true,
